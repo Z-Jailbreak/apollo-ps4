@@ -78,7 +78,7 @@ uint32_t* free_mem;                         // Pointer after last texture
 */
 save_list_t hdd_saves = {
 	.icon_id = cat_hdd_png_index,
-	.title = "HDD Saves",
+	.title = "Guardados HDD",
     .list = NULL,
     .path = "",
     .ReadList = &ReadUserList,
@@ -91,7 +91,7 @@ save_list_t hdd_saves = {
 */
 save_list_t usb_saves = {
 	.icon_id = cat_usb_png_index,
-	.title = "USB Saves",
+	.title = "Guardados USB",
     .list = NULL,
     .path = "",
     .ReadList = &ReadUsbList,
@@ -104,7 +104,7 @@ save_list_t usb_saves = {
 */
 save_list_t trophies = {
 	.icon_id = cat_warning_png_index,
-	.title = "Trophies",
+	.title = "Trofeos",
     .list = NULL,
     .path = "",
     .ReadList = &ReadTrophyList,
@@ -117,7 +117,7 @@ save_list_t trophies = {
 */
 save_list_t online_saves = {
 	.icon_id = cat_db_png_index,
-	.title = "Online Database",
+	.title = "Base de Datos Online",
     .list = NULL,
     .path = ONLINE_URL,
     .ReadList = &ReadOnlineList,
@@ -130,7 +130,7 @@ save_list_t online_saves = {
 */
 save_list_t user_backup = {
     .icon_id = cat_bup_png_index,
-    .title = "User Tools",
+    .title = "Herramientas del Usuario",
     .list = NULL,
     .path = "",
     .ReadList = &ReadBackupList,
@@ -176,30 +176,30 @@ static const char* get_button_prompts(int menu_id)
 		case MENU_ONLINE_DB:
 		case MENU_PS1VMC_SAVES:
 		case MENU_PS2VMC_SAVES:
-			prompt = "\x10 Select    \x13 Back    \x12 Details    \x11 Refresh";
+			prompt = "\x10 Seleccionar    \x13 Volver    \x12 Detalles    \x11 Refrescar";
 			break;
 
 		case MENU_USER_BACKUP:
-			prompt = "\x10 Select    \x13 Back    \x11 Refresh";
+			prompt = "\x10 Seleccionar    \x13 Volver    \x11 Refrescar";
 			break;
 
 		case MENU_SETTINGS:
 		case MENU_CODE_OPTIONS:
-			prompt = "\x10 Select    \x13 Back";
+			prompt = "\x10 Seleccionar    \x13 Volver";
 			break;
 
 		case MENU_CREDITS:
 		case MENU_PATCH_VIEW:
 		case MENU_SAVE_DETAILS:
-			prompt = "\x13 Back";
+			prompt = "\x13 Volver";
 			break;
 
 		case MENU_PATCHES:
-			prompt = "\x10 Select    \x12 View Code    \x13 Back";
+			prompt = "\x10 Seleccionar    \x12 Ver codigo    \x13 Volver";
 			break;
 
 		case MENU_HEX_EDITOR:
-			prompt = "\x10 Value Up  \x11 Value Down   \x13 Exit";
+			prompt = "\x10 Valor arriba  \x11 Valor abajo   \x13 Salir";
 			break;
 
 		case MENU_MAIN_SCREEN:
@@ -587,7 +587,7 @@ s32 main(s32 argc, const char* argv[])
 	// Initialize jailbreak
 	if (!initialize_jbc() || !initVshDataMount())
 	{
-		notify_popup(NOTIFICATION_ICON_BAN, "Failed to initialize jailbreak!");
+		notify_popup(NOTIFICATION_ICON_BAN, "Fallo al inicializar el jailbreak!");
 		terminate();
 	}
 
@@ -641,7 +641,7 @@ s32 main(s32 argc, const char* argv[])
 		LOG("Unpacking application data...");
 //		clean_directory(APOLLO_DATA_PATH);
 		if (extract_zip(APOLLO_APP_PATH "misc/appdata.zip", APOLLO_DATA_PATH))
-			notify_popup(NOTIFICATION_ICON_DEFAULT, "Successfully installed local application data");
+			notify_popup(NOTIFICATION_ICON_DEFAULT, "Datos de Aplicacion locales instalados exitosamente");
 
 		strncpy(apollo_config.app_ver, APOLLO_VERSION, sizeof(apollo_config.app_ver));
 		save_app_settings(&apollo_config);

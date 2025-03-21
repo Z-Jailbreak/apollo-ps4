@@ -57,7 +57,7 @@ void initMenuOptions(void)
 
 static int ReloadUserSaves(save_list_t* save_list)
 {
-	init_loading_screen("Loading save games...");
+	init_loading_screen("Cargando archivos de guardado...");
 
 	if (save_list->list)
 	{
@@ -80,7 +80,7 @@ static int ReloadUserSaves(save_list_t* save_list)
 
 	if (!save_list->list)
 	{
-		show_message("No save-games found");
+		show_message("No se han encontrado archivos de guardado");
 		return 0;
 	}
 
@@ -132,7 +132,7 @@ static void SetMenu(int id)
 		case MENU_PS2VMC_SAVES:
 			if (id == MENU_MAIN_SCREEN)
 			{
-				init_loading_screen("Saving PS2 Memory Card...");
+				init_loading_screen("Guardando Memory Card PS2...");
 				UnloadGameList(vmc2_saves.list);
 				vmc2_saves.list = NULL;
 				mcio_vmcFinish();
@@ -322,7 +322,7 @@ static void SetMenu(int id)
 		case MENU_PATCH_VIEW: //Cheat View Menu
 			menu_old_sel[MENU_PATCH_VIEW] = 0;
 			if (apollo_config.doAni)
-				Draw_CheatsMenu_View_Ani("Patch view");
+				Draw_CheatsMenu_View_Ani("Vista de parche");
 			break;
 
 		case MENU_SAVE_DETAILS: //Save Detail View Menu
@@ -449,7 +449,7 @@ static void doSaveMenu(save_list_t * save_list)
 
 		if (!selected_entry->codes && !save_list->ReadCodes(selected_entry))
 		{
-			show_message("No data found in folder:\n%s", selected_entry->path);
+			show_message("Datos no encontrados en la carpeta:\n%s", selected_entry->path);
 			return;
 		}
 
@@ -501,7 +501,7 @@ static void doMainMenu(void)
 		return;
 	}
 
-	else if(orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE) && show_dialog(DIALOG_TYPE_YESNO, "Exit to XMB?"))
+	else if(orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE) && show_dialog(DIALOG_TYPE_YESNO, "Cerrar la aplicacion y salir al menu XMB?"))
 		close_app = 1;
 	
 	Draw_MainMenu();
@@ -641,7 +641,7 @@ static void doHexEditor(void)
 
 	else if (orbisPadGetButtonPressed(ORBIS_PAD_BUTTON_CIRCLE))
 	{
-		if (show_dialog(DIALOG_TYPE_YESNO, "Save changes to %s?", strrchr(hex_data.filepath, '/') + 1) &&
+		if (show_dialog(DIALOG_TYPE_YESNO, "Guardar cambios a %s?", strrchr(hex_data.filepath, '/') + 1) &&
 			(write_buffer(hex_data.filepath, hex_data.data, hex_data.size) == SUCCESS))
 		{
 			selected_centry->options[option_index].value[menu_sel][1] = CMD_IMPORT_DATA_FILE;
@@ -699,7 +699,7 @@ static void doPatchViewMenu(void)
 		return;
 	}
 	
-	Draw_CheatsMenu_View("Patch view");
+	Draw_CheatsMenu_View("Vista de parche");
 }
 
 static void doCodeOptionsMenu(void)
@@ -734,7 +734,7 @@ static void doCodeOptionsMenu(void)
 				snprintf(hex_data.filepath, sizeof(hex_data.filepath), APOLLO_USER_PATH "%s_%s/%s", apollo_config.user_id, selected_entry->title_id, selected_entry->dir_name, code->options[0].name[code->options[0].sel]);
 				if (read_buffer(hex_data.filepath, &hex_data.data, &hex_data.size) < 0)
 				{
-					show_message("Unable to load\n%s", hex_data.filepath);
+					show_message("No se puede cargar\n%s", hex_data.filepath);
 					SetMenu(last_menu_id[MENU_CODE_OPTIONS]);
 					return;
 				}

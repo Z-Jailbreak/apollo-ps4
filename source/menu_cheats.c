@@ -104,7 +104,7 @@ void Draw_CheatsMenu_Options_Ani_Exit(void)
 		Draw_CheatsMenu_Selection(menu_old_sel[5], (rgbVal << 24) | (rgbVal << 16) | (rgbVal << 8) | 0xFF);
 
 		DrawTexture(&menu_textures[edit_shadow_png_index], left - (menu_textures[edit_shadow_png_index].width * 1) + 1, 0, 0, menu_textures[edit_shadow_png_index].width, SCREEN_HEIGHT, icon_a);
-		DrawHeader(cat_cheats_png_index, left, selected_centry->name, "Options", APP_FONT_TITLE_COLOR | icon_a, 0xffffffff, 1);
+		DrawHeader(cat_cheats_png_index, left, selected_centry->name, "Opciones", APP_FONT_TITLE_COLOR | icon_a, 0xffffffff, 1);
 
 		SDL_RenderPresent(renderer);
 
@@ -246,7 +246,7 @@ void Draw_CheatsMenu_View_Ani_Exit(void)
 		Draw_CheatsMenu_Selection(menu_old_sel[5], (rgbVal << 24) | (rgbVal << 16) | (rgbVal << 8) | 0xFF);
 
 		DrawTexture(&menu_textures[edit_shadow_png_index], left - (menu_textures[edit_shadow_png_index].width * 1) + 1, 0, 0, menu_textures[edit_shadow_png_index].width, SCREEN_HEIGHT, icon_a);
-		DrawHeader(cat_cheats_png_index, left, "Details", selected_centry->name, APP_FONT_TITLE_COLOR | icon_a, 0xffffffff, 1);
+		DrawHeader(cat_cheats_png_index, left, "Detalles", selected_centry->name, APP_FONT_TITLE_COLOR | icon_a, 0xffffffff, 1);
 
 		SDL_RenderPresent(renderer);
 
@@ -502,16 +502,16 @@ static void get_subtitle(int type, size_t count, char* sub)
     {
         case cat_usb_png_index:
         case cat_hdd_png_index:
-            sprintf(sub, "%zu Saves", count -1);
+            sprintf(sub, "%zu Guardados", count -1);
             break;
 
         case cat_db_png_index:
         case cat_warning_png_index:
-            sprintf(sub, "%zu Games", count);
+            sprintf(sub, "%zu Juegos", count);
             break;
 
         case cat_bup_png_index:
-            sprintf(sub, "Tools");
+            sprintf(sub, "Herramientas");
             break;
 
         default:

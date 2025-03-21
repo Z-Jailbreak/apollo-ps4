@@ -47,20 +47,20 @@ static void downloadSave(const save_entry_t* entry, const char* file, int dst)
 	_set_dest_path(path, dst, (entry->flags & SAVE_FLAG_PS4) ? PS4_SAVES_PATH_USB : PSV_SAVES_PATH_USB);
 	if (mkdirs(path) != SUCCESS)
 	{
-		show_message("Error! Export folder is not available:\n%s", path);
+		show_message("Error! La carpeta de exportacion no esta disponible:\n%s", path);
 		return;
 	}
 
 	if (!http_download(entry->path, file, APOLLO_LOCAL_CACHE "tmpsave.zip", 1))
 	{
-		show_message("Error downloading save game from:\n%s%s", entry->path, file);
+		show_message("Error descargando archivos de guardado desde:\n%s%s", entry->path, file);
 		return;
 	}
 
 	if (extract_zip(APOLLO_LOCAL_CACHE "tmpsave.zip", path))
-		show_message("Save game successfully downloaded to:\n%s", path);
+		show_message("Archivos de guardado descargados exitosamente en:\n%s", path);
 	else
-		show_message("Error extracting save game!");
+		show_message("Error al extraer el guardado!");
 
 	unlink_secure(APOLLO_LOCAL_CACHE "tmpsave.zip");
 }
@@ -99,11 +99,11 @@ static void zipSave(const save_entry_t* entry, const char* exp_path)
 
 	if (mkdirs(exp_path) != SUCCESS)
 	{
-		show_message("Error! Export folder is not available:\n%s", exp_path);
+		show_message("Error! La carpeta de exportacion no esta disponible:\n%s", exp_path);
 		return;
 	}
 
-	init_loading_screen("Exporting save game...");
+	init_loading_screen("Exportando archivo de guardado...");
 
 	snprintf(zip_file, sizeof(zip_file), "%s%s-%s_%d-%02d-%02d_%02d%02d%02d.zip", exp_path, entry->title_id, entry->dir_name, t.tm_year+1900, t.tm_mon+1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
 
@@ -131,11 +131,11 @@ static void zipSave(const save_entry_t* entry, const char* exp_path)
 	stop_loading_screen();
 	if (!ret)
 	{
-		show_message("Error! Can't export save game to:\n%s", exp_path);
+		show_message("Error! No se puede exportar la partida guardada en:\n%s", exp_path);
 		return;
 	}
 
-	show_message("Zip file successfully saved to:\n%s", zip_file);
+	show_message("Archivo ZIP guardado correctamente en:\n%s", zip_file);
 }
 
 static void copySave(const save_entry_t* save, const char* exp_path)
@@ -144,17 +144,17 @@ static void copySave(const save_entry_t* save, const char* exp_path)
 
 	if (strncmp(save->path, exp_path, strlen(exp_path)) == 0)
 	{
-		show_message("Copy operation cancelled!\nSame source and destination.");
+		show_message("Operación de copia cancelada!\nMismo origen y destino.");
 		return;
 	}
 
 	if (mkdirs(exp_path) != SUCCESS)
 	{
-		show_message("Error! Export folder is not available:\n%s", exp_path);
+		show_message("Error! La carpeta de exportacion no esta disponible:\n%s", exp_path);
 		return;
 	}
 
-	init_loading_screen("Copying files...");
+	init_loading_screen("Copiando archivos...");
 
 	snprintf(copy_path, sizeof(copy_path), "%s%08x_%s_%s/", exp_path, apollo_config.user_id, save->title_id, save->dir_name);
 
@@ -162,7 +162,7 @@ static void copySave(const save_entry_t* save, const char* exp_path)
 	copy_directory(save->path, save->path, copy_path);
 
 	stop_loading_screen();
-	show_message("Files successfully copied to:\n%s", exp_path);
+	show_message("Archivos copiados exitosamente en:\n%s", exp_path);
 }
 
 static int _update_save_details(const char* sys_path, const save_entry_t* save)
@@ -235,18 +235,18 @@ static void copySaveHDD(const save_entry_t* save)
 	//source save is already on HDD
 	if (save->flags & SAVE_FLAG_HDD)
 	{
-		show_message("Copy operation cancelled!\nSame source and destination.");
+		show_message("Operación de copia cancelada!\nMismo origen y destino.");
 		return;
 	}
 
-	init_loading_screen("Copying save game...");
+	init_loading_screen("Copiando archivo de guardado...");
 	int ret = _copy_save_hdd(save);
 	stop_loading_screen();
 
 	if (ret)
-		show_message("Files successfully copied to:\n%s/%s", save->title_id, save->dir_name);
+		show_message("Archivos copiados exitosamente en:\n%s/%s", save->title_id, save->dir_name);
 	else
-		show_message("Error! Can't copy Save-game folder:\n%s/%s", save->title_id, save->dir_name);
+		show_message("Error! No se puede copiar la carpeta de guardados:\n%s/%s", save->title_id, save->dir_name);
 }
 
 static void copyAllSavesHDD(const save_entry_t* save, int all)
@@ -257,7 +257,7 @@ static void copyAllSavesHDD(const save_entry_t* save, int all)
 	uint64_t progress = 0;
 	list_t *list = ((void**)save->dir_name)[0];
 
-	init_progress_bar("Copying all saves...");
+	init_progress_bar("Copiando todos los guardados...");
 
 	LOG("Copying all saves from '%s' to HDD...", save->path);
 	for (node = list_head(list); (item = list_get(node)); node = list_next(node))
@@ -270,9 +270,9 @@ static void copyAllSavesHDD(const save_entry_t* save, int all)
 	end_progress_bar();
 
 	if (err_count)
-		show_message("Error: %d Saves couldn't be copied to HDD", err_count);
+		show_message("Error: %d Guardados no se han podido copiar al HDD", err_count);
 	else
-		show_message("All Saves copied to HDD");
+		show_message("Todos los archivos de guardado copiados al HDD");
 }
 
 void extractArchive(const char* file_path)
@@ -308,9 +308,9 @@ void extractArchive(const char* file_path)
 	}
 
 	if (ret)
-		show_message("All files extracted to:\n%s", exp_path);
+		show_message("Todos los archivos se han extraido en:\n%s", exp_path);
 	else
-		show_message("Error: %s couldn't be extracted", file_path);
+		show_message("Error: %s no se ha podido extraer", file_path);
 }
 
 static void exportFingerprint(const save_entry_t* save, int silent)
@@ -323,7 +323,7 @@ static void exportFingerprint(const save_entry_t* save, int silent)
 
 	if (read_file(fpath, buffer, sizeof(buffer)) != SUCCESS)
 	{
-		if (!silent) show_message("Error! Keystone file is not available:\n%s", fpath);
+		if (!silent) show_message("Error! Archivo Keystone no esta disponible:\n%s", fpath);
 		return;
 	}
 
@@ -352,7 +352,7 @@ static void toggleTrophy(const save_entry_t* entry)
 	code_entry_t* code;
 	list_node_t* node;
 
-	init_loading_screen("Applying changes...");
+	init_loading_screen("Aplicando cambios...");
 
 	for (node = list_head(entry->codes); (code = list_get(node)); node = list_next(node))
 	{
@@ -381,9 +381,9 @@ static void toggleTrophy(const save_entry_t* entry)
 	stop_loading_screen();
 
 	if(ret)
-		show_message("Trophies successfully updated!");
+		show_message("Trofeos actualizados con exito!");
 	else
-		show_message("Error! Couldn't update trophies");
+		show_message("Error! No se han podido actualizar los trofeos");
 }
 
 static void exportTrophiesZip(const char* exp_path)
@@ -394,11 +394,11 @@ static void exportTrophiesZip(const char* exp_path)
 
 	if (mkdirs(exp_path) != SUCCESS)
 	{
-		show_message("Error! Export folder is not available:\n%s", exp_path);
+		show_message("Error! La carpeta de exportacion no esta disponible:\n%s", exp_path);
 		return;
 	}
 
-	init_loading_screen("Exporting Trophies ...");
+	init_loading_screen("Exportando trofeos ...");
 
 	asprintf(&export_file, "%s" "trophies_%08x.zip", exp_path, apollo_config.user_id);
 	asprintf(&trp_path, TROPHY_PATH_HDD, apollo_config.user_id);
@@ -416,7 +416,7 @@ static void exportTrophiesZip(const char* exp_path)
 	free(tmp);
 
 	stop_loading_screen();
-	show_message("Trophies successfully saved to:\n%strophies_%08d.zip", exp_path, apollo_config.user_id);
+	show_message("Trofeos guardados exitosamente en:\n%strophies_%08d.zip", exp_path, apollo_config.user_id);
 }
 
 static void dumpAllFingerprints(const save_entry_t* save)
@@ -427,7 +427,7 @@ static void dumpAllFingerprints(const save_entry_t* save)
 	save_entry_t *item;
 	list_t *list = ((void**)save->dir_name)[0];
 
-	init_progress_bar("Dumping all fingerprints...");
+	init_progress_bar("Volcando todas las huellas dactilares...");
 
 	LOG("Dumping all fingerprints from '%s'...", save->path);
 	for (node = list_head(list); (item = list_get(node)); node = list_next(node))
@@ -452,7 +452,7 @@ static void dumpAllFingerprints(const save_entry_t* save)
 	}
 
 	end_progress_bar();
-	show_message("All fingerprints dumped to:\n%sfingerprints.txt", APOLLO_PATH);
+	show_message("Todas las huellas dactilares volcadas en:\n%sfingerprints.txt", APOLLO_PATH);
 }
 
 static void activateAccount(int user)
@@ -461,23 +461,23 @@ static void activateAccount(int user)
 	char value[SFO_ACCOUNT_ID_SIZE*2+1];
 
 	snprintf(value, sizeof(value), "%016lx", 0x6F6C6C6F70610000 + (~apollo_config.user_id & 0xFFFF));
-	if (!osk_dialog_get_text("Enter the Account ID", value, sizeof(value)))
+	if (!osk_dialog_get_text("Escribe el ID de Usuario", value, sizeof(value)))
 		return;
 
 	if (!sscanf(value, "%lx", &account))
 	{
-		show_message("Error! Account ID is not valid");
+		show_message("Error! El ID de Usuario introducido no es valido");
 		return;
 	};
 
 	LOG("Activating user=%d (%lx)...", user, account);
 	if (regMgr_SetAccountId(user, &account) != SUCCESS)
 	{
-		show_message("Error! Couldn't activate user account");
+		show_message("Error! No se ha podido activar el usuario");
 		return;
 	}
 
-	show_message("Account successfully activated!\nA system reboot might be required");
+	show_message("Usuario activado exitosamente!\nEs posible que requiera reiniciar el sistema");
 }
 
 static void copySavePFS(const save_entry_t* save)
@@ -493,14 +493,14 @@ static void copySavePFS(const save_entry_t* save)
 	snprintf(src_path, sizeof(src_path), "%s%s.bin", save->path, save->dir_name);
 	if ((read_file(src_path, (uint8_t*) mount, 0x10) < 0) || get_max_pfskey_ver() < mount[8])
 	{
-		show_message("Error: Encrypted save from a newer firmware version!\n\n"
+		show_message("Error: Guardado encriptado de una version de firmware mas reciente!\n\n"
 			"Required firmware: %s", get_fw_by_pfskey_ver(mount[8]));
 		return;
 	}
 
 	if (!orbis_SaveMount(save, ORBIS_SAVE_DATA_MOUNT_MODE_RDWR | ORBIS_SAVE_DATA_MOUNT_MODE_CREATE2 | ORBIS_SAVE_DATA_MOUNT_MODE_COPY_ICON, mount))
 	{
-		show_message("Error: can't create HDD save");
+		show_message("Error: No se ha podido crear guardado HDD");
 		return;
 	}
 	orbis_SaveUmount(mount);
@@ -510,7 +510,7 @@ static void copySavePFS(const save_entry_t* save)
 	LOG("Copying <%s> to %s...", src_path, hdd_path);
 	if (copy_file(src_path, hdd_path) != SUCCESS)
 	{
-		show_message("Error: can't copy %s", hdd_path);
+		show_message("Error: no se ha podido copiar %s", hdd_path);
 		return;
 	}
 
@@ -519,13 +519,13 @@ static void copySavePFS(const save_entry_t* save)
 	LOG("Copying <%s> to %s...", src_path, hdd_path);
 	if (copy_file(src_path, hdd_path) != SUCCESS)
 	{
-		show_message("Error: can't copy %s", hdd_path);
+		show_message("Error: no se ha podido copiar %s", hdd_path);
 		return;
 	}
 
 	if (!orbis_SaveMount(save, ORBIS_SAVE_DATA_MOUNT_MODE_RDWR, mount))
 	{
-		show_message("Error! Can't mount encrypted save.\n(incompatible save-game firmware version)");
+		show_message("Error! No se puede montar el guardado encriptado.\n(version de firmware del guardado no compatible)");
 		return;
 	}
 
@@ -536,7 +536,7 @@ static void copySavePFS(const save_entry_t* save)
 	_update_save_details(hdd_path, save);
 	orbis_SaveUmount(mount);
 
-	show_message("Encrypted save copied successfully!\n%s/%s", save->title_id, save->dir_name);
+	show_message("Guardado encriptado copiado exitosamente!\n%s/%s", save->title_id, save->dir_name);
 	return;
 }
 
@@ -556,9 +556,9 @@ static void copyKeystone(const save_entry_t* entry, int import)
 	LOG("Copy '%s' <-> '%s'...", path_save, path_data);
 
 	if (copy_file(import ? path_data : path_save, import ? path_save : path_data) == SUCCESS)
-		show_message("Keystone successfully copied to:\n%s", import ? path_save : path_data);
+		show_message("Keystone copiado exitosamente en:\n%s", import ? path_save : path_data);
 	else
-		show_message("Error! Keystone couldn't be copied");
+		show_message("Error! Keystone no se ha podido copiar");
 }
 
 static int webReqHandler(dWebRequest_t* req, dWebResponse_t* res, void* list)
@@ -745,10 +745,10 @@ static void enableWebServer(dWebReqHandler_t handler, void* data, int port)
 
 	if (dbg_webserver_start(port, handler, data))
 	{
-		show_message("Web Server listening on http://%s:%d\nPress OK to stop the Server.", info.ip_address, port);
+		show_message("Servidor web escuchando en http://%s:%d\nPresiona OK para Detener el Servidor.", info.ip_address, port);
 		dbg_webserver_stop();
 	}
-	else show_message("Error starting Web Server!");
+	else show_message("Error al iniciar el Servidor web!");
 }
 
 static void copyAllSavesUSB(const save_entry_t* save, const char* dst_path, int all)
@@ -763,11 +763,11 @@ static void copyAllSavesUSB(const save_entry_t* save, const char* dst_path, int 
 
 	if (!list || mkdirs(dst_path) != SUCCESS)
 	{
-		show_message("Error! Folder is not available:\n%s", dst_path);
+		show_message("Error! No esta disponible la carpeta:\n%s", dst_path);
 		return;
 	}
 
-	init_progress_bar("Copying all saves...");
+	init_progress_bar("Copiando todos los archivos de guardados...");
 
 	LOG("Copying all saves to '%s'...", dst_path);
 	for (node = list_head(list); (item = list_get(node)); node = list_next(node))
@@ -788,7 +788,7 @@ static void copyAllSavesUSB(const save_entry_t* save, const char* dst_path, int 
 	}
 
 	end_progress_bar();
-	show_message("All Saves copied to:\n%s", dst_path);
+	show_message("Todos los archivos de guardado copiados en:\n%s", dst_path);
 }
 
 static void exportAllSavesVMC(const save_entry_t* save, int dev, int all)
@@ -800,7 +800,7 @@ static void exportAllSavesVMC(const save_entry_t* save, int dev, int all)
 	uint64_t progress = 0;
 	list_t *list = ((void**)save->dir_name)[0];
 
-	init_progress_bar("Exporting all VMC saves...");
+	init_progress_bar("Exportando los Guardados VMC...");
 	_set_dest_path(outPath, dev, PS1_SAVES_PATH_USB);
 	mkdirs(outPath);
 
@@ -820,7 +820,7 @@ static void exportAllSavesVMC(const save_entry_t* save, int dev, int all)
 
 	end_progress_bar();
 
-	show_message("%d/%d Saves exported to\n%s", done, done+err_count, outPath);
+	show_message("%d/%d Guardados exportados a\n%s", done, done+err_count, outPath);
 }
 
 static void exportVmcSave(const save_entry_t* save, int type, int dst_id)
@@ -840,9 +840,9 @@ static void exportVmcSave(const save_entry_t* save, int type, int dst_id)
 	}
 
 	if (saveSingleSave(outPath, save->blocks, type))
-		show_message("Save successfully exported to:\n%s", outPath);
+		show_message("Guardado exportado exitsamente en:\n%s", outPath);
 	else
-		show_message("Error exporting save:\n%s", save->path);
+		show_message("Error al exportar el guardado:\n%s", save->path);
 }
 
 static void export_ps1vmc(const char* vm1_file, int dst, int vmp)
@@ -853,16 +853,16 @@ static void export_ps1vmc(const char* vm1_file, int dst, int vmp)
 	_set_dest_path(dst_path, dst, VMC_PS1_PATH_USB);
 	if (mkdirs(dst_path) != SUCCESS)
 	{
-		show_message("Error! Export folder is not available:\n%s", dst_path);
+		show_message("Error! La carpeta de exportacion no esta disponible:\n%s", dst_path);
 		return;
 	}
 
 	snprintf(dstfile, sizeof(dstfile), "%s%s.%s", dst_path, vm1_file, vmp ? "VMP" : "VM1");
 
 	if (saveMemoryCard(dstfile, vmp ? PS1CARD_VMP : PS1CARD_RAW, 0))
-		show_message("Memory card successfully exported to:\n%s", dstfile);
+		show_message("Memory card ha sido exportada con exito en:\n%s", dstfile);
 	else
-		show_message("Error! Failed to export PS1 memory card");
+		show_message("Error! Fallo al exportar la memory card PS1");
 }
 
 static void export_vmc2save(const save_entry_t* save, int type, int dst_id)
@@ -896,16 +896,16 @@ static void export_vmc2save(const save_entry_t* save, int type, int dst_id)
 	}
 
 	if (ret)
-		show_message("Save successfully exported to:\n%s", outPath);
+		show_message("Guardados exportados exitosamente en:\n%s", outPath);
 	else
-		show_message("Error exporting save:\n%s", save->path);
+		show_message("Error al exportar el guardado:\n%s", save->path);
 }
 
 static void import_save2vmc(const char* src, int type)
 {
 	int ret = 0;
 
-	init_loading_screen("Importing PS2 save...");
+	init_loading_screen("Importando guardado PS2...");
 	switch (type)
 	{
 	case FILE_TYPE_PSV:
@@ -934,9 +934,9 @@ static void import_save2vmc(const char* src, int type)
 	stop_loading_screen();
 
 	if (ret)
-		show_message("Successfully imported to VMC:\n%s", src);
+		show_message("Importado exitosamente a VMC:\n%s", src);
 	else
-		show_message("Error importing save:\n%s", src);
+		show_message("Error importando el guardado:\n%s", src);
 }
 
 static int deleteSave(const save_entry_t* save)
@@ -944,7 +944,7 @@ static int deleteSave(const save_entry_t* save)
 	int ret = 0;
 	char fpath[256];
 
-	if (!show_dialog(DIALOG_TYPE_YESNO, "Do you want to delete %s?", save->dir_name))
+	if (!show_dialog(DIALOG_TYPE_YESNO, "Quieres eliminar %s?", save->dir_name))
 		return 0;
 
 	if (save->flags & SAVE_FLAG_PS1)
@@ -1001,9 +1001,9 @@ static void exportVM2raw(const char* vm2_file, int dst, int ecc)
 	stop_loading_screen();
 
 	if (ret == sceMcResSucceed)
-		show_message("File successfully saved to:\n%s", dstfile);
+		show_message("Archivo guardado exitosamente en:\n%s", dstfile);
 	else
-		show_message("Error! Failed to export PS2 memory card");
+		show_message("Error! Fallo al exportar Memory Card PS2");
 }
 
 static void rebuildAppDB(const char* path)
@@ -1015,7 +1015,7 @@ static void rebuildAppDB(const char* path)
 	memset(&userIdList, 0, sizeof(userIdList));
 	if (sceUserServiceGetRegisteredUserIdList(&userIdList) < 0)
 	{
-		show_message("Error getting PS4 user list!");
+		show_message("Error al obtener la lista de usuarios de PS4!");
 		return;
 	}
 
@@ -1024,12 +1024,12 @@ static void rebuildAppDB(const char* path)
 		{
 			memset(name, 0, sizeof(name));
 			sceUserServiceGetUserName(userIdList.userId[i], name, sizeof(name));
-			show_message("Database rebuild for user %s failed!", name);
+			show_message("Reconstruccion de base de datos para el usuario %s fallida!", name);
 			error++;
 		}
 
 	if(!error)
-		show_message("Database rebuilt successfully!\nLog out for changes to take effect");
+		show_message("Base de datos reconstruida exitosamente!\nCierra sesion para que los cambios surgan efecto");
 }
 
 static void* orbis_host_callback(int id, int* size)
@@ -1149,7 +1149,7 @@ static int apply_cheat_patches(const save_entry_t* entry)
 	code_entry_t* code;
 	list_node_t* node;
 
-	init_loading_screen("Applying changes...");
+	init_loading_screen("Aplicando cambios...");
 
 	for (node = list_head(entry->codes); (code = list_get(node)); node = list_next(node))
 	{
@@ -1242,9 +1242,9 @@ static void resignAllSaves(const save_entry_t* save, int all)
 	end_progress_bar();
 
 	if (err_count)
-		show_message("Error: %d Saves couldn't be resigned", err_count);
+		show_message("Error: %d Guardados no han sido resignados", err_count);
 	else
-		show_message("All saves successfully resigned!");
+		show_message("Todos los guardados resignados exitosamente!");
 }
 
 static void exportZipDB(const char* path)
@@ -1255,7 +1255,7 @@ static void exportZipDB(const char* path)
 
 	if (mkdirs(EXPORT_DB_PATH) != SUCCESS)
 	{
-		show_message("Error! Export folder is not available:\n%s", EXPORT_DB_PATH);
+		show_message("Error! No esta disponible la carpeta de exportacion:\n%s", EXPORT_DB_PATH);
 		return;
 	}
 
@@ -1265,12 +1265,12 @@ static void exportZipDB(const char* path)
 	tmp = strdup(path);
 	*strrchr(tmp, '/') = 0;
 
-	init_loading_screen("Exporting system database...");
+	init_loading_screen("Exporando la base de datos del sistema...");
 	zip_directory(tmp, path, zipfile);
 	stop_loading_screen();
 	free(tmp);
 
-	show_message("Zip file successfully saved to:\n%s", zipfile);
+	show_message("Archivo ZIP guardado exitosamente en:\n%s", zipfile);
 }
 
 static void importZipDB(const char* dst_path, const char* zipfile)
@@ -1281,9 +1281,9 @@ static void importZipDB(const char* dst_path, const char* zipfile)
 	LOG("Importing Backup %s ...", path);
 
 	if (extract_zip(path, dst_path))
-        show_message("DB Backup %s successfully restored!", zipfile);
+        show_message("Copia de seguridad BD %s restaurado exitosamente!", zipfile);
     else
-        show_message("Error! Backup %s couldn't be restored", zipfile);
+        show_message("Error! Backup %s no se ha restaurado", zipfile);
 }
 
 static int _copy_save_file(const char* src_path, const char* dst_path, const char* filename)
@@ -1306,9 +1306,9 @@ static void decryptSaveFile(const save_entry_t* entry, const char* filename)
 	LOG("Decrypt '%s%s' to '%s'...", entry->path, filename, path);
 
 	if (_copy_save_file(entry->path, path, filename))
-		show_message("File successfully exported to:\n%s%s", path, filename);
+		show_message("Archivo exportado correctamente a:\n%s%s", path, filename);
 	else
-		show_message("Error! File %s couldn't be exported", filename);
+		show_message("Error! El archivo %s no se ha podido exportar", filename);
 }
 
 static void encryptSaveFile(const save_entry_t* entry, const char* filename)
@@ -1318,7 +1318,7 @@ static void encryptSaveFile(const save_entry_t* entry, const char* filename)
 	snprintf(path, sizeof(path), APOLLO_USER_PATH "%s_%s/%s", apollo_config.user_id, entry->title_id, entry->dir_name, filename);
 	if (file_exists(path) != SUCCESS)
 	{
-		show_message("Error! Can't find decrypted save-game file:\n%s", path);
+		show_message("Error! No se ha encontrado el archivo de guardado encriptado:\n%s", path);
 		return;
 	}
 
@@ -1326,9 +1326,9 @@ static void encryptSaveFile(const save_entry_t* entry, const char* filename)
 	LOG("Encrypt '%s%s' to '%s'...", path, filename, entry->path);
 
 	if (_copy_save_file(path, entry->path, filename))
-		show_message("File successfully imported to:\n%s%s", entry->path, filename);
+		show_message("Archivo importado exitosamente en:\n%s%s", entry->path, filename);
 	else
-		show_message("Error! File %s couldn't be imported", filename);
+		show_message("Error! El archivo %s no se ha podido importar", filename);
 }
 
 static void downloadLink(const char* path)
@@ -1343,9 +1343,9 @@ static void downloadLink(const char* path)
 	snprintf(out_path, sizeof(out_path), "%s%s", path, fname ? ++fname : "download.bin");
 
 	if (http_download(url, NULL, out_path, 1))
-		show_message("File successfully downloaded to:\n%s", out_path);
+		show_message("Archivo descargado exitosaemnte en:\n%s", out_path);
 	else
-		show_message("Error! File couldn't be downloaded");
+		show_message("Error! No se ha podido descargar el archivo");
 }
 
 static void toggleBrowserHistory(int usr)
@@ -1355,18 +1355,18 @@ static void toggleBrowserHistory(int usr)
 	snprintf(path, sizeof(path), "/user/home/%08x/webbrowser/endhistory.txt", usr);
 	if (dir_exists(path) == SUCCESS)
 	{
-		if (show_dialog(DIALOG_TYPE_YESNO, "Enable Browser history?") && rmdir(path) == SUCCESS)
-			show_message("Browser history enabled\n%s", path);
+		if (show_dialog(DIALOG_TYPE_YESNO, "Habilitar el historial del navegador?") && rmdir(path) == SUCCESS)
+			show_message("Historial de navegador habilitado\n%s", path);
 
 		return;
 	}
 
-	if (show_dialog(DIALOG_TYPE_YESNO, "Disable Browser history?"))
+	if (show_dialog(DIALOG_TYPE_YESNO, "Deshabilitar el historial del navegador"))
 	{
 		unlink_secure(path);
 		strcat(path, "/");
 		if (mkdirs(path) == SUCCESS)
-			show_message("Browser history disabled\n%s", path);
+			show_message("Historial de navegador deshabilitado\n%s", path);
 	}
 }
 
@@ -1541,18 +1541,18 @@ void execCodeCommand(code_entry_t* code, const char* codecmd)
 
 		case CMD_DB_DEL_FIX:
 			if (appdb_fix_delete(code->file, apollo_config.user_id))
-				show_message("User %x database fixed successfully!\nLog out for changes to take effect", apollo_config.user_id);
+				show_message("Usuario %x base de datos reconstruida exitosamente!\nCierre sesion para que los cambios surgan efecto", apollo_config.user_id);
 			else
-				show_message("Database fix failed!");
+				show_message("Fallo al reconstruir la base de datos!");
 
 			code->activated = 0;
 			break;
 
 		case CMD_DB_DLC_REBUILD:
 			if (addcont_dlc_rebuild(code->file))
-				show_message("DLC database fixed successfully!\nLog out for changes to take effect");
+				show_message("Base de datos DLC reconstruida exitosamente!\nCierre sesion para que los cambios surgan efecto");
 			else
-				show_message("DLC Database rebuild failed!");
+				show_message("Fallo al reconstruir la base de datos DLC!");
 
 			code->activated = 0;
 			break;
@@ -1594,9 +1594,9 @@ void execCodeCommand(code_entry_t* code, const char* codecmd)
 
 		case CMD_IMP_VMC1SAVE:
 			if (openSingleSave(code->file, (int*) host_buf))
-				show_message("Save successfully imported:\n%s", code->file);
+				show_message("Guardado importado exitosamente:\n%s", code->file);
 			else
-				show_message("Error! Couldn't import save:\n%s", code->file);
+				show_message("Error! No se ha podido importar el guardado:\n%s", code->file);
 
 			selected_entry->flags |= SAVE_FLAG_UPDATED;
 			code->activated = 0;

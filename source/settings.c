@@ -14,8 +14,8 @@
 
 #define ORBIS_USER_SERVICE_USER_ID_INVALID	-1
 
-static char * sort_opt[] = {"Disabled", "by Name", "by Title ID", "by Type", NULL};
-static char * usb_src[] = {"USB 0", "USB 1", "USB 2", "USB 3", "USB 4", "USB 5", "USB 6", "USB 7", "Fake USB", "Auto-detect", NULL};
+static char * sort_opt[] = {"Deshabilitado", "Por nombre", "Por Title ID", "Por tipo", NULL};
+static char * usb_src[] = {"USB 0", "USB 1", "USB 2", "USB 3", "USB 4", "USB 5", "USB 6", "USB 7", "USB Falso", "Auto-detectar", NULL};
 
 static void usb_callback(int sel);
 static void log_callback(int sel);
@@ -26,55 +26,55 @@ static void clearcache_callback(int sel);
 static void upd_appdata_callback(int sel);
 
 menu_option_t menu_options[] = {
-	{ .name = "\nBackground Music", 
+	{ .name = "\nMusica de fondo", 
 		.options = NULL, 
 		.type = APP_OPTION_BOOL, 
 		.value = &apollo_config.music, 
 		.callback = music_callback 
 	},
-	{ .name = "Menu Animations", 
+	{ .name = "Animaciones del Menu", 
 		.options = NULL, 
 		.type = APP_OPTION_BOOL, 
 		.value = &apollo_config.doAni, 
 		.callback = ani_callback 
 	},
-	{ .name = "Sort Saves",
+	{ .name = "Filtrar Archivos de Guardado",
 		.options = sort_opt,
 		.type = APP_OPTION_LIST,
 		.value = &apollo_config.doSort,
 		.callback = sort_callback
 	},
-	{ .name = "\nUSB Saves Source",
+	{ .name = "\nDeteccion de Saves USB",
 		.options = (char**) usb_src,
 		.type = APP_OPTION_LIST,
 		.value = &apollo_config.usb_dev,
 		.callback = usb_callback
 	},
-	{ .name = "\nVersion Update Check", 
+	{ .name = "\nComprobar si hay nueva version", 
 		.options = NULL, 
 		.type = APP_OPTION_BOOL, 
 		.value = &apollo_config.update, 
 		.callback = update_callback 
 	},
-	{ .name = "Change Online Database URL",
+	{ .name = "Cambiar URL de la Base de datos Online",
 		.options = NULL,
 		.type = APP_OPTION_CALL,
 		.value = NULL,
 		.callback = db_url_callback 
 	},
-	{ .name = "Clear Local Cache", 
+	{ .name = "Limpiar Cache Local", 
 		.options = NULL, 
 		.type = APP_OPTION_CALL, 
 		.value = NULL, 
 		.callback = clearcache_callback 
 	},
-	{ .name = "Update Application Data", 
+	{ .name = "Actualizar datos de aplicacion", 
 		.options = NULL, 
 		.type = APP_OPTION_CALL, 
 		.value = NULL, 
 		.callback = upd_appdata_callback 
 	},
-	{ .name = "\nEnable Debug Log",
+	{ .name = "\nHabilitar Registros de Depuracion",
 		.options = NULL,
 		.type = APP_OPTION_BOOL,
 		.value = &apollo_config.dbglog,
@@ -106,8 +106,8 @@ static void usb_callback(int sel)
 
 static void db_url_callback(int sel)
 {
-	if (osk_dialog_get_text("Enter the URL of the online database", apollo_config.save_db, sizeof(apollo_config.save_db)))
-		show_message("Online database URL changed to:\n%s", apollo_config.save_db);
+	if (osk_dialog_get_text("Escribe la URL de la Base de Datos Online", apollo_config.save_db, sizeof(apollo_config.save_db)))
+		show_message("URL de Base de datos Online cambiada a:\n%s", apollo_config.save_db);
 
 	if (apollo_config.save_db[strlen(apollo_config.save_db)-1] != '/')
 		strcat(apollo_config.save_db, "/");
@@ -118,7 +118,7 @@ static void clearcache_callback(int sel)
 	LOG("Cleaning folder '%s'...", APOLLO_LOCAL_CACHE);
 	clean_directory(APOLLO_LOCAL_CACHE);
 
-	show_message("Local cache folder cleaned:\n" APOLLO_LOCAL_CACHE);
+	show_message("Carpeta de Cache Local limpiada:\n" APOLLO_LOCAL_CACHE);
 }
 
 static void upd_appdata_callback(int sel)
@@ -126,12 +126,12 @@ static void upd_appdata_callback(int sel)
 	int i;
 
 	if (!http_download(ONLINE_PATCH_URL, "apollo-ps4-update.zip", APOLLO_LOCAL_CACHE "appdata.zip", 1))
-		show_message("Error! Can't download data update file!");
+		show_message("Error! No se ha podido descargar archivos de actualizacion de datos!");
 
 	if ((i = extract_zip(APOLLO_LOCAL_CACHE "appdata.zip", APOLLO_DATA_PATH)) > 0)
-		show_message("Successfully updated %d save patch files!", i);
+		show_message("Se ha actualizado los archivos de parche %d exitosamente!", i);
 	else
-		show_message("Error! Can't extract data update file!");
+		show_message("Error! No se ha podido extraer los archivos de actualizacion de datos!");
 
 	unlink_secure(APOLLO_LOCAL_CACHE "appdata.zip");
 }
@@ -202,13 +202,13 @@ void update_callback(int sel)
 	*end = 0;
 	LOG("download URL is %s", start);
 
-	if (show_dialog(DIALOG_TYPE_YESNO, "New version available! Download update?"))
+	if (show_dialog(DIALOG_TYPE_YESNO, "Nueva version ya disponible! Quieres descargar la actualizacion?"))
 	{
 		char* pkg_path = (dir_exists("/data/pkg") == SUCCESS) ? "/data/pkg/apollo-ps4.pkg" : "/data/apollo-ps4.pkg";
 		if (http_download(start, NULL, pkg_path, 1))
-			show_message("Update downloaded to %s", pkg_path);
+			show_message("Actualizacion descargada en %s", pkg_path);
 		else
-			show_message("Download error!");
+			show_message("Error al descargar!");
 	}
 
 end_update:
@@ -223,12 +223,12 @@ static void log_callback(int sel)
 	if (!apollo_config.dbglog)
 	{
 		dbglogger_stop();
-		show_message("Debug Logging Disabled");
+		show_message("Registro de depuracion deshabilitado");
 		return;
 	}
 
 	dbglogger_init_mode(FILE_LOGGER, APOLLO_PATH "apollo.log", 0);
-	show_message("Debug Logging Enabled\n\n%s", APOLLO_PATH "apollo.log");
+	show_message("Registro de depuracion Habilitado\n\n%s", APOLLO_PATH "apollo.log");
 }
 
 static int updateSaveParams(const char* mountPath, const char* title, const char* subtitle, const char* details, uint32_t userParam)
@@ -281,7 +281,7 @@ int save_app_settings(app_config_t* config)
 	snprintf(filePath, sizeof(filePath), APOLLO_SETTING_PATH "settings.bin", mountResult.mountPathName);
 	write_buffer(filePath, (uint8_t*) config, sizeof(app_config_t));
 
-	updateSaveParams(mountResult.mountPathName, "Apollo Save Tool", "User Settings", "www.bucanero.com.ar", 0);
+	updateSaveParams(mountResult.mountPathName, "Apollo Save Tool", "Ajustes del Usuario", "www.bucanero.com.ar", 0);
 	if (sceSaveDataUmount((void*)&mountResult.mountPathName) < 0)
 	{
 		LOG("UMOUNT ERROR");
