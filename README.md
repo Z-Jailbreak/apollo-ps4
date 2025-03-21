@@ -219,9 +219,9 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 [socat]: http://www.dest-unreach.org/socat/
-[app_downloads]: https://github.com/z-jailbreak/apollo-ps4/releases
-[app_latest]: https://github.com/z-jailbreak/apollo-ps4/releases/latest
-[app_license]: https://github.com/z-jailbreak/apollo-ps4/blob/master/LICENSE
-[img_downloads]: https://img.shields.io/github/downloads/z-jailbreak/apollo-ps4/total.svg?maxAge=3600
-[img_latest]: https://img.shields.io/github/release/z-jailbreak/apollo-ps4.svg?maxAge=3600
+[app_downloads]: https://github.com/Z-Jailbreak/apollo-ps4/releases
+[app_latest]: https://github.com/Z-Jailbreak/apollo-ps4/releases/latest
+[app_license]: https://github.com/Z-Jailbreak/apollo-ps4/blob/master/LICENSE
+[img_downloads]: https://img.shields.io/github/downloads/Z-Jailbreak/apollo-ps4/total.svg?maxAge=3600
+[img_latest]: https://img.shields.io/github/release/Z-Jailbreak/apollo-ps4.svg?maxAge=3600
 [img_license]: https://img.shields.io/github/license/z-jailbreak/apollo-ps4.svg?maxAge=2592000
