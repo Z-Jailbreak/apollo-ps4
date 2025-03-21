@@ -16,7 +16,7 @@
 #define APOLLO_USER_PATH		APOLLO_PATH "%08x/"
 #define APOLLO_DATA_PATH		APOLLO_PATH "data/"
 #define APOLLO_LOCAL_CACHE		APOLLO_PATH "cache/"
-#define APOLLO_UPDATE_URL		"https://api.github.com/repos/bucanero/apollo-ps4/releases/latest"
+#define APOLLO_UPDATE_URL		"https://api.github.com/repos/z-jailbreak/apollo-ps4/releases/latest"
 
 #define MAX_USB_DEVICES         8
 #define USB0_PATH               "/mnt/usb0/"
@@ -55,7 +55,7 @@
 
 #define IMP_PS2VMC_PATH_USB     USB_PATH "PS2/VMC/"
 
-#define ONLINE_URL              "https://bucanero.github.io/apollo-saves/"
+#define ONLINE_URL              "https://z-jailbreak.github.io/Z-Saves/"
 #define ONLINE_PATCH_URL        "https://bucanero.github.io/apollo-patches/PS4/"
 #define ONLINE_CACHE_TIMEOUT    24*3600     // 1-day local cache
 
