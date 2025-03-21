@@ -1,7 +1,7 @@
 # Apollo Save Tool (PS4)
 
 [![Downloads][img_downloads]][app_downloads] [![Release][img_latest]][app_latest] [![License][img_license]][app_license]
-[![Build app package](https://github.com/bucanero/apollo-ps4/actions/workflows/build.yml/badge.svg)](https://github.com/bucanero/apollo-ps4/actions/workflows/build.yml)
+[![Build app package](https://github.com/z-jailbreak/apollo-ps4/actions/workflows/build.yml/badge.svg)](https://github.com/z-jailbreak/apollo-ps4/actions/workflows/build.yml)
 ![PS4](https://img.shields.io/badge/-PS4-003791?style=flat&logo=PlayStation)
 [![Twitter](https://img.shields.io/twitter/follow/dparrino?label=Follow)](https://twitter.com/dparrino)
 
@@ -34,6 +34,7 @@ This homebrew app allows you to download, unlock, patch, and resign save-game fi
 * **Standalone:** no computer required, everything happens on the PS4.
 * **Automatic settings:** auto-detection of PS4 firmware, User ID, and Account-ID settings.
 * **Multi-user:** supports multiple user accounts.
+* **Spanish Translate:** this version of apollo is translated to spanish.
 
 ## Save Management
 
@@ -78,9 +79,9 @@ Get the [latest version here][app_latest].
 
 - Login to GitHub [(this is required to download artifacts)](https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts#:~:text=Who%20can%20use,download%20workflow%20artifacts.).
 - Click on a build in the **[Actions](../../actions)** Tab.
-  - ![image](https://github.com/bucanero/apollo-ps4/assets/37698908/2e52961b-04ef-42f1-9453-78b3ceb24afc)
+  - ![image](https://github.com/z-jailbreak/apollo-ps4/assets/37698908/2e52961b-04ef-42f1-9453-78b3ceb24afc)
 - Click on the artifact to download the pkg zip.
-  - ![image](https://github.com/bucanero/apollo-ps4/assets/37698908/aaeb523e-eab9-43f7-a993-5fa902ada1b7)
+  - ![image](https://github.com/z-jailbreak/apollo-ps4/assets/37698908/aaeb523e-eab9-43f7-a993-5fa902ada1b7)
 
 </details>
 
@@ -94,7 +95,7 @@ My GitHub projects are open to a [sponsor program](https://patreon.com/dparrino)
 
 # Setup instructions
 
-No special setup is needed. Just download the latest [`IV0000-APOL00004_00-APOLLO0000000PS4.pkg`](https://github.com/bucanero/apollo-ps4/releases/latest/download/IV0000-APOL00004_00-APOLLO0000000PS4.pkg) package and install it on your PlayStation 4.
+No special setup is needed. Just download the latest [`IV0000-APOL00004_00-APOLLO0000000PS4.pkg`](https://github.com/z-jailbreak/apollo-ps4/releases/latest/download/IV0000-APOL00004_00-APOLLO0000000PS4.pkg) package and install it on your PlayStation 4.
 On first run, the application will detect and setup the required user settings.
 
 ## Data folders
@@ -147,9 +148,9 @@ It will open the context menu on the screen. Press ![O button](https://github.co
  - To reload the list, press ![Square](https://github.com/bucanero/pkgi-ps3/raw/master/data/SQUARE.png).
  - Press <kbd>L1</kbd>/<kbd>L2</kbd> or <kbd>R1</kbd>/<kbd>R2</kbd> trigger buttons to move pages up or down.
 
-# Online Database
+# Online Database (Z-Saves Fork)
 
-The application also provides direct access to the [Apollo online database](https://github.com/bucanero/apollo-saves) of save-game files for PlayStation 4 games. These usually offer additional features such as completed games that can save you many hours of playing.
+The application also provides direct access to the [Apollo online database](https://github.com/z-jailbreak/Z-Saves) of save-game files for PlayStation 4 games. These usually offer additional features such as completed games that can save you many hours of playing.
 
 Currently, the list of available games and files is limited, but the project aims to add more save-games shared by the community.
 
@@ -218,9 +219,9 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 [socat]: http://www.dest-unreach.org/socat/
-[app_downloads]: https://github.com/bucanero/apollo-ps4/releases
-[app_latest]: https://github.com/bucanero/apollo-ps4/releases/latest
-[app_license]: https://github.com/bucanero/apollo-ps4/blob/master/LICENSE
-[img_downloads]: https://img.shields.io/github/downloads/bucanero/apollo-ps4/total.svg?maxAge=3600
-[img_latest]: https://img.shields.io/github/release/bucanero/apollo-ps4.svg?maxAge=3600
-[img_license]: https://img.shields.io/github/license/bucanero/apollo-ps4.svg?maxAge=2592000
+[app_downloads]: https://github.com/z-jailbreak/apollo-ps4/releases
+[app_latest]: https://github.com/z-jailbreak/apollo-ps4/releases/latest
+[app_license]: https://github.com/z-jailbreak/apollo-ps4/blob/master/LICENSE
+[img_downloads]: https://img.shields.io/github/downloads/z-jailbreak/apollo-ps4/total.svg?maxAge=3600
+[img_latest]: https://img.shields.io/github/release/z-jailbreak/apollo-ps4.svg?maxAge=3600
+[img_license]: https://img.shields.io/github/license/z-jailbreak/apollo-ps4.svg?maxAge=2592000
